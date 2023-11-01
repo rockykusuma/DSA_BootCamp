@@ -1,6 +1,6 @@
 
 
-func solution(input: [Int], target: Int) -> Int {
+func findTheSolution(input: [Int], target: Int) -> Int {
     var startIndex = 0
     var endIndex = 1
 
@@ -19,7 +19,6 @@ func binarySearch(input: [Int], target: Int, startIndex: Int, endIndex: Int) -> 
     var mid: Int = -1
     while start <= end {
         mid = start + (end - start) / 2
-        
        if target < input[mid] {
             end = mid - 1
         } else if target > input[mid] {
@@ -32,5 +31,5 @@ func binarySearch(input: [Int], target: Int, startIndex: Int, endIndex: Int) -> 
     return -1
 }
 
-let result = solution(input: [2, 6, 12, 43, 56, 108, 212, 215, 300, 400, 401, 402, 501, 502, 601, 605, 610, 615, 700, 712], target: 300)
+let result = findTheSolution(input: [2, 6, 12, 43, 56, 108, 212, 215, 300, 400, 401, 402, 501, 502, 601, 605, 610, 615, 700, 712], target: 300)
 print(result)

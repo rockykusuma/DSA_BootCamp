@@ -25,7 +25,6 @@ func binarySearch(input: [Int], target: Int, startIndex: Int, endIndex: Int) -> 
             start = mid + 1
         } else {
             return mid
-
         }
     }
     return -1

@@ -7,6 +7,10 @@
  Output: "ay"
  */
 
+extension StringProtocol {
+    subscript(offset: Int) -> Character { self[index(startIndex, offsetBy: offset)] }
+}
+
 func testDuplicate() {
     var input = [
         "g",
@@ -36,4 +40,41 @@ func removeDuplicate(input: String) -> String {
     return temporaryString
 }
 
-testDuplicate()
+
+func removeDuplicates(_ input: String, _ k: Int) -> String {
+    var resultString = ""
+    for char in input {
+        if let value = resultString.last, value == char, isUnique(resultString: resultString, char: char, k: k) {
+            // pop k-1 elements
+            for _ in 0 ..< k-1 {
+                if (!resultString.isEmpty) {
+                    resultString.removeLast()
+                }                
+            }         
+        } else {
+            resultString.append(char)
+        }
+    }
+    return resultString
+}
+
+func isUnique(resultString: String, char: Character, k: Int) -> Bool {
+    var count = 0
+    if resultString.count < k-1 {
+        return false
+    }
+    while count < k-1 {
+        let lastIndex = resultString.count - 1
+        let temp = resultString[lastIndex - count]
+        if char != temp {
+            return false
+        }
+        count += 1
+    }
+    return true
+}
+
+
+let result = removeDuplicates("deeedbbcccbdaa", 3)
+// let result = removeDuplicates("aabcccd", 3)
+print(result)

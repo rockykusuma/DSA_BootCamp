@@ -1,0 +1,75 @@
+/*
+1095. Find in Mountain Array
+*/
+
+
+
+func findInMountainArray(_ target: Int, _ mountainArr: [Int]) -> Int {
+    let peakIndex = findPeakInMountain(input: mountainArr)
+    let firstCheck = orderAgnosticBinarySearch(input: mountainArr, target: target, start: 0, end: peakIndex)
+    if firstCheck != -1 {
+        return firstCheck
+    } else {
+        return orderAgnosticBinarySearch(input: mountainArr, target: target, start: peakIndex, end: mountainArr.count-1)
+    }
+}
+
+
+func findPeakInMountain(input: [Int]) -> Int {
+    if input.isEmpty {
+        return -1
+    }
+    var startIndex = 0
+    var endIndex = input.count - 1
+    var midIndex = 0
+
+    while(startIndex < endIndex) {
+        midIndex = startIndex + (endIndex - startIndex)/2
+
+        if input[midIndex] < input[midIndex+1] {
+            startIndex = midIndex + 1
+        } else  {
+            endIndex = midIndex
+        }
+    }
+    // in the end startIndex and endIdex will be same
+    return startIndex
+}
+
+func orderAgnosticBinarySearch(input: [Int], target: Int, start: Int, end: Int) -> Int {
+        
+    if input.isEmpty {
+        return -1
+    }
+    var midIndex: Int = 0
+    var startIndex = start
+    var endIndex = end
+    
+    let isAscending = input[startIndex] < input[endIndex]
+    
+    while startIndex <= endIndex {
+        midIndex = startIndex + (endIndex - startIndex) / 2
+        if target == input[midIndex] {
+            return midIndex
+        }
+        
+        if isAscending {
+            if target < input[midIndex] {
+                endIndex = midIndex - 1
+            } else if target > input[midIndex] {
+                startIndex = midIndex + 1
+            }
+        } else {
+            if target > input[midIndex] {
+                endIndex = midIndex - 1
+            } else if target < input[midIndex] {
+                startIndex = midIndex + 1
+            }
+        }
+    }
+    return -1
+}
+
+
+let result = findInMountainArray(5, [0,2,3,4,5,6,5,4,3])
+print(result)
